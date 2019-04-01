@@ -1,3 +1,7 @@
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 public class E17 {
@@ -11,7 +15,14 @@ public class E17 {
 
         System.out.println("Year: ");
         int year = scanner.nextInt();
-        System.out.println("Day of week: " + dayOfWeek(q, m, year));
+
+
+        if (isRightDate(q,m,year)) {
+            System.out.println("Day of week: " + dayOfWeek(q, m, year));
+        }
+        else{
+            System.out.println("Invalid date");
+        }
 
     }
 
@@ -43,5 +54,22 @@ public class E17 {
                 return "Friday";
         }
         return "";
+    }
+
+
+    private static boolean isRightDate(int q, int m, int year) {
+
+        DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        format.setLenient(false);
+        try {
+            Date rightDate = format.parse(String.valueOf(q) + "/" + String.valueOf(m) + "/" + String.valueOf(year));
+            if (rightDate.toString().equals(String.valueOf(q) + "/" + String.valueOf(m) + "/" + String.valueOf(year))) {
+                return true;
+            }
+        } catch (ParseException e) {
+            e.getMessage();
+            return false;
+        }
+        return true;
     }
 }
